@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.OperationLogMapper">
+
+    <insert id="insert" parameterType="org.example.pojo.OperationLog">
+        INSERT INTO op_log(
+        user_id, username, action, method, uri, ip, params, result, success, error, created_at
+        )
+        VALUES(
+        #{userId}, #{username}, #{action}, #{method}, #{uri}, #{ip}, #{params}, #{result}, #{success}, #{error}, NOW()
+        )
+    </insert>
+
+</mapper>

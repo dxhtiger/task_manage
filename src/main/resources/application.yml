@@ -1,0 +1,85 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/taskmanage
+    username: root
+    password: pass
+  data:
+    redis:
+          host: localhost
+          port: 6379
+  mail:
+    host: smtp.qq.com         # 根据你的邮箱服务商改（QQ示例）
+    port: 587                 # 465(SSL) / 587(TLS)
+    username: 2427461924@qq.com     # 发件邮箱
+    password: bguxcdytvqoydiff        # 邮箱授权码（不是登录密码）
+    default-encoding: UTF-8
+    from: "任务提醒系统 <2427461924@qq.com>"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  # 任务状态枚举（可选：方便统一修改“已完成”的值）
+tasks:
+  status:
+    done: 2
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: org.example.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+    web: trace
+    org.cy.demo: debug
+
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql
+  auto-dialect: true
+  auto-runtime-dialect: true
+  support-methods-arguments: true
+server:
+  port: 9999
+
+# 启用调试模式
+debug: true
+
+# 自定义配置
+oa:
+  token:
+    expire-time: 99999999999 # 令牌过期时间
+  anonurls: # 无需登录直接可以访问的资源路径，可以使用ant格式
+    - /security/login
+    - /t
+
+#文件上传配置
+file:
+  local-path: uploads/avatar/
+  url-prefix: /static/avatar/
+
+# ✅ Actuator 监控（仅管理员放行，SecurityConfig 已限制 /actuator/**）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+ops:
+  log:
+    store: db          # db / file
+    file-path: logs/ops.log
